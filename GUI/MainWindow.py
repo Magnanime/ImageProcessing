@@ -2,7 +2,7 @@ import tkinter as tk
 import screeninfo as si
 import math as mt
 import time
-from GUI.ImageDisplay import ImageDisplay as disp
+from GUI.ImageDisplay import ImageDisplay
 
 
 class MainWindow:
@@ -41,9 +41,6 @@ class MainWindow:
         self.root.rowconfigure(0, weight=3)
         self.root.rowconfigure(1, weight=1)
 
-    def update(self):
-        self.image_frame.update()
-
     def __init__(self):
         # Root of window
         self.root = tk.Tk()
@@ -56,21 +53,21 @@ class MainWindow:
         self.image_frame = tk.Frame(self.root, bg='blue',
                                     height=mt.floor(float(self.default_y) * (3 / 8)),
                                     width=mt.floor(float(self.default_x) * (3 / 8)))
-        self.image_frame.grid(column=0, row=0, sticky='wens')
+        self.image_frame.grid(column=0, row=0, sticky='wens', padx=10, pady=10)
 
         # Menu display frame
         self.menu_frame = tk.Frame(self.root, bg='green',
                                    height=mt.floor(float(self.default_y) * (4 / 8)),
                                    width=mt.floor(float(self.default_x) * (1 / 8)))
-        self.menu_frame.grid(column=1, row=0, sticky='wens', rowspan=2)
+        self.menu_frame.grid(column=1, row=0, sticky='wens', padx=10, pady=10, rowspan=2)
 
         # Button display frame
         self.button_frame = tk.Frame(self.root, bg='red',
                                      height=mt.floor(float(self.default_y) * (1 / 8)),
                                      width=mt.floor(float(self.default_x) * (3 / 8)))
-        self.button_frame.grid(column=0, row=1, sticky='wens')
+        self.button_frame.grid(column=0, row=1, sticky='wens', padx=10, pady=10)
         #
-        display_image = disp(self.image_frame)
-        display_menu = disp(self.menu_frame)
-        display_buttons = disp(self.button_frame)
+        #display_image = ImageDisplay(self.image_frame)
+        #display_menu = ImageDisplay(self.menu_frame)
+        #display_buttons = ImageDisplay(self.button_frame)
         self.root.mainloop()
