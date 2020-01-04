@@ -55,6 +55,7 @@ class MainWindow:
     def __init__(self):
         # Root of window
         self.root = tk.Tk()
+        self.root.configure(bg='grey')
 
         # Default screen resolution
         self.default_x = self.get_monitor_data()[0]

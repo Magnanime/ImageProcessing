@@ -25,7 +25,7 @@ class ImageDisplay:
 
         # Display image
         self.image = ImageTk.PhotoImage(self.raw_image.resize((int(self.im_width), int(self.im_height)), Image.ANTIALIAS))
-        self.panel = tk.Label(master_element, image=self.image)
+        self.panel = tk.Label(master_element, image=self.image, bg='grey')
         self.panel.pack(fill='both', expand=1)
 
         # Bind to panel for dynamic resolution change
@@ -55,7 +55,7 @@ class ImageDisplay:
             self.im_width = self.im_height * self.im_x_to_y_ratio
         else:
             self.im_width = self.width
-            self.im_height = self.im_width * self.im_x_to_y_ratio
+            self.im_height = self.im_width / self.im_x_to_y_ratio
 
     def select_image(self):
         self.path = askopenfilename()

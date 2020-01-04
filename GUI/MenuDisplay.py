@@ -1,4 +1,5 @@
 import tkinter as tk
+import sys
 from PIL import ImageTk, Image
 from tkinter.filedialog import askopenfilename
 import time as ti
@@ -7,7 +8,6 @@ import time as ti
 class MenuDisplay:
 
     def __init__(self, master_element, image_display_element):
-        path = 'GUI/costam.png'
         # Frame dimensions
         self.width = 100
         self.height = 100
@@ -21,12 +21,18 @@ class MenuDisplay:
         self.panel.columnconfigure(1, weight=1)
 
         # Display buttons
+        # Open image
+        self.open_btn = tk.Button(self.panel, text='Open', command=lambda: self.open_image(image_display_element))
+        self.open_btn.grid(row=1, column=1, padx=5, pady=5, sticky='we')
+        # Save image
+        self.save_btn = tk.Button(self.panel, text='Save')
+        self.save_btn.grid(row=1, column=0, padx=5, pady=5, sticky='we')
         # About button
         self.about_btn = tk.Button(self.panel, text='About')
-        self.about_btn.grid(row=1, column=0, padx=5, pady=5, sticky='we')
+        self.about_btn.grid(row=2, column=0, padx=5, pady=5, sticky='we')
         # Quit button
-        self.quit_btn = tk.Button(self.panel, text='Quit')
-        self.quit_btn.grid(row=1, column=1, padx=5, pady=5, sticky='we')
+        self.quit_btn = tk.Button(self.panel, text='Quit', command=self.quit)
+        self.quit_btn.grid(row=2, column=1, padx=5, pady=5, sticky='we')
 
         # Bind to panel for dynamic resolution change
         master_element.bind('<Configure>', self.update)
@@ -41,3 +47,9 @@ class MenuDisplay:
         master_element.update()
         self.width = master_element.winfo_width()
         self.height = master_element.winfo_height()
+
+    def open_image(self, image_display_element):
+        image_display_element.select_image()
+
+    def quit(self):
+        sys.exit(1)
