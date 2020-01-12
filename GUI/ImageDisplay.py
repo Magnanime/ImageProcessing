@@ -1,13 +1,12 @@
 import tkinter as tk
+from ImageProcessing import ImageProcessing
 from PIL import ImageTk, Image
-from tkinter.filedialog import askopenfilename
 import time as ti
 
 
 class ImageDisplay:
 
     def __init__(self, master_element):
-        self.path = 'GUI/costam.png'
         # Frame dimensions
         self.width = 100
         self.height = 100
@@ -15,13 +14,15 @@ class ImageDisplay:
         self.set_dimensions(master_element)
 
         # Open Image
-        self.raw_image = Image.open(self.path)
+        # This is only a image that will be displayed. The real image file is stored in ImageProcessing class.
+        self.raw_image = ImageProcessing.image
 
         # Image dimensions initialization
+        # Variables are used to set the right ratio and dimensions of displayed image
         self.im_width = 100
         self.im_height = 100
         self.im_x_to_y_ratio = 1
-        self.set_im_dimensions()
+        self.set_im_display_dimensions()
 
         # Display image
         self.image = ImageTk.PhotoImage(self.raw_image.resize((int(self.im_width), int(self.im_height)), Image.ANTIALIAS))
@@ -36,21 +37,21 @@ class ImageDisplay:
             self.width = event.width
         if self.height > event.height + 10 or self.height < event.height - 10:
             self.height = event.height
-        self.set_im_dimensions()
-        self.image = ImageTk.PhotoImage(self.raw_image.resize((int(self.im_width), int(self.im_height)), Image.ANTIALIAS))
-        self.panel.configure(image=self.image)
+        self.set_im_display_dimensions()
+        self.update_image()
 
     def set_dimensions(self, master_element):
         master_element.update()
         self.width = master_element.winfo_width()
         self.height = master_element.winfo_height()
+        self.panel_x_to_y_ratio = self.width / self.height
 
-    def set_im_dimensions(self):
+    def set_im_display_dimensions(self):
         # Image x to y ratio
         self.im_x_to_y_ratio = self.raw_image.size[0] / self.raw_image.size[1]
 
         # Image x to y to panel x to y ratio
-        if (self.raw_image.size[0] / self.raw_image.size[1]) <= (self.width / self.height):
+        if self.im_x_to_y_ratio <= self.panel_x_to_y_ratio:
             self.im_height = self.height
             self.im_width = self.im_height * self.im_x_to_y_ratio
         else:
@@ -58,8 +59,13 @@ class ImageDisplay:
             self.im_height = self.im_width / self.im_x_to_y_ratio
 
     def select_image(self):
-        self.path = askopenfilename()
-        self.raw_image = Image.open(self.path)
-        self.set_im_dimensions()
+        ImageProcessing.open_image()
+        ImageProcessing.quantize_image(5)
+        self.raw_image = ImageProcessing.image
+        self.set_im_display_dimensions()
+        self.update_image()
+
+    def update_image(self):
+        self.raw_image = ImageProcessing.image
         self.image = ImageTk.PhotoImage(self.raw_image.resize((int(self.im_width), int(self.im_height)), Image.ANTIALIAS))
         self.panel.configure(image=self.image)

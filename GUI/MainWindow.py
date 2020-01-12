@@ -3,6 +3,7 @@ import screeninfo as si
 import math as mt
 from GUI.ImageDisplay import ImageDisplay
 from GUI.MenuDisplay import MenuDisplay
+from GUI.QuantizeEditMenu import QuantizeEditMenu
 
 
 class MainWindow:
@@ -90,5 +91,5 @@ class MainWindow:
         #
         display_image = ImageDisplay(self.image_frame)
         display_menu = MenuDisplay(self.menu_frame, display_image)
-        #display_buttons = ImageDisplay(self.button_frame)
+        display_buttons = QuantizeEditMenu(self.button_frame, display_image)
         self.root.mainloop()
