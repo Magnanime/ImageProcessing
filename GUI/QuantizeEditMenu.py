@@ -63,7 +63,6 @@ class QuantizeEditMenu:
 
     @staticmethod
     def quantize(image_display, level):
-        print(level)
         if str(level) == '0':
             ImageProcessing.cancel_changes()
             image_display.update_image()

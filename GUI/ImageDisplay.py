@@ -60,7 +60,6 @@ class ImageDisplay:
 
     def select_image(self):
         ImageProcessing.open_image()
-        ImageProcessing.quantize_image(5)
         self.raw_image = ImageProcessing.image
         self.set_im_display_dimensions()
         self.update_image()
