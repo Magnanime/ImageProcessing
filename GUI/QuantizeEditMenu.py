@@ -74,3 +74,6 @@ class QuantizeEditMenu:
         self.quant_level_sld.set(0)
         ImageProcessing.cancel_changes()
         image_display.update_image()
+
+    #def apply_changes(self, image_display):
+
